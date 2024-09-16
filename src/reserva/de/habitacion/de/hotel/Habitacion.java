@@ -68,17 +68,9 @@ public class Habitacion {
             System.out.println("La habitacion ya esta reservada.");
         }
     }
-    // Metodo para cancelar una reserva en el unico caso que este reservada
-    public void cancelar() {
-        if (!disponible) {
-            disponible = true;
-        } else {
-            System.out.println("La habitacion no esta reservada.");
-        }
-    }
     @Override
     public String toString() {
-        String disponibilidad = disponible ? "Sí" : "No"; 
+        String disponibilidad = disponible ? "Si" : "No"; 
         return "Tipo: " + tipo + 
             ", Precio: $" + precio + 
             ", Capacidad: " + capacidad + 

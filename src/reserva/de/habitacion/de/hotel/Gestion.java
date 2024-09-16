@@ -4,7 +4,11 @@
  */
 package reserva.de.habitacion.de.hotel;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,7 +17,7 @@ import java.util.ArrayList;
 public class Gestion {
     //con este arraylist hago una lista de habitaciones disponibles en el hotel
     private ArrayList<Habitacion> habitaciones = new ArrayList<>();
-    
+    private ArrayList<Reservar> reservas = new ArrayList<>();
     
     public Gestion() {
         //constructores
@@ -31,27 +35,41 @@ public class Gestion {
     }
 
     // Metodo para reservar una habitacion
-    public boolean reservarHabitacion(int indice, int numPersonas, String fechaInicio, String fechaFin) {
-        // Verifica que el índice esté dentro del rango de la lista de habitaciones
-        if (indice >= 0 && indice < habitaciones.size()) {
-            Habitacion habitacion = habitaciones.get(indice);
-            //verifica si la habitacion fue reservada
-            if (!habitacion.getDisponible()) {
-                System.out.println("Lo sentimos, \n La habitacion no esta disponible.");
+    public boolean reservarHabitacion(int indice, int numPersonas, String fechaInicioStr, String fechaFinStr, Usuario usuario) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        try {
+            LocalDate fechaInicio = LocalDate.parse(fechaInicioStr, formatter);
+            LocalDate fechaFin = LocalDate.parse(fechaFinStr, formatter);
+
+            if (fechaFin.isBefore(fechaInicio)) {
+                System.out.println("La fecha de salida no puede ser anterior a la de entrada.");
                 return false;
             }
-            // Verifica si la capacidad de la habitacion es suficiente para el numero de personas
-            if (numPersonas > habitacion.getCapacidad()) {
-                System.out.println("La habitacion no tiene suficiente capacidad para " + numPersonas + " personas.");
-                return false;
+
+            if (indice >= 0 && indice < habitaciones.size()) {
+                Habitacion habitacion = habitaciones.get(indice);
+
+                if (!habitacion.getDisponible()) {
+                    System.out.println("Lo sentimos, la habitación no está disponible.");
+                    return false;
+                }
+
+                if (numPersonas > habitacion.getCapacidad()) {
+                    System.out.println("La habitación no tiene suficiente capacidad para " + numPersonas + " personas.");
+                    return false;
+                }
+
+                habitacion.setDisponible(false);
+                Reservar nuevaReserva = new Reservar(usuario, habitacion, fechaInicio, fechaFin);
+                reservas.add(nuevaReserva);
+                System.out.println("-> Habitación reservada exitosamente del " + fechaInicio + " al " + fechaFin);
+                return true;
             }
-            habitacion.setDisponible(false);
-            System.out.println("-> Habitacion reservada exitosamente del " + fechaInicio + " al " + fechaFin);
-            return true;
-        } else {
-            System.out.println("-> Lo sentimos \n Habitacion no disponible");
-            return false;
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de fecha incorrecto. Use el formato dd/MM/yyyy.");
         }
+        return false;
     }
 
     // Metodo para cancelar una reserva
@@ -67,9 +85,11 @@ public class Gestion {
             }
         }
     }
-
     //Metodo para obtener la lista de habitaciones
-    public ArrayList<Habitacion> getHabitaciones() {
-        return habitaciones;
+//    public ArrayList<Habitacion> getHabitaciones() {
+//        return habitaciones;
+//    }
+    public ArrayList<Reservar> getReservas() {
+        return reservas;
     }
 }
