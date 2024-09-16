@@ -64,6 +64,8 @@ public class Home extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         Jtxt_fechasalida = new javax.swing.JTextField();
         jButton_mensajeReserva = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        Salir = new javax.swing.JButton();
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -179,11 +181,13 @@ public class Home extends javax.swing.JFrame {
         });
         jPanel5.add(Jtxt_Fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 170, -1));
 
+        jLabel5.setFont(new java.awt.Font("Constantia", 1, 14)); // NOI18N
         jLabel5.setText("Fecha de Llegada:");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Constantia", 1, 14)); // NOI18N
         jLabel6.setText("Fecha de Salida: ");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, -1, -1));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, -1, -1));
 
         Jtxt_fechasalida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,14 +196,31 @@ public class Home extends javax.swing.JFrame {
         });
         jPanel5.add(Jtxt_fechasalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 170, -1));
 
+        jButton_mensajeReserva.setBackground(new java.awt.Color(0, 0, 102));
+        jButton_mensajeReserva.setFont(new java.awt.Font("Constantia", 1, 14)); // NOI18N
+        jButton_mensajeReserva.setForeground(new java.awt.Color(255, 255, 255));
         jButton_mensajeReserva.setText("Reserva");
-        jButton_mensajeReserva.setActionCommand("Reserva");
         jButton_mensajeReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_mensajeReservaActionPerformed(evt);
             }
         });
         jPanel5.add(jButton_mensajeReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+
+        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel9.setText("(dd/MM/yyyy)");
+        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, -1));
+
+        Salir.setBackground(new java.awt.Color(0, 0, 102));
+        Salir.setFont(new java.awt.Font("Constantia", 1, 14)); // NOI18N
+        Salir.setForeground(new java.awt.Color(255, 255, 255));
+        Salir.setText("Salir");
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+        jPanel5.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, -1, -1));
 
         jTabbedPane1.addTab("Reservacion", jPanel5);
 
@@ -218,7 +239,7 @@ public class Home extends javax.swing.JFrame {
     String id = ID.getText();
     String correo = Correo.getText();
     String numero = Numero.getText();
-
+        
         JOptionPane.showMessageDialog(this, "Registro completado: \nNombre: " + nombre + "\nID: " + id + "\nCorreo: " + correo + "\nTeléfono: " + numero);
     }//GEN-LAST:event_jButton_mensajeActionPerformed
 
@@ -227,24 +248,20 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_IDActionPerformed
 
     private void Jtxt_FechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jtxt_FechaActionPerformed
-
-         String fechaIngresada = Jtxt_Fecha.getText();
+        String fechaIngresada = Jtxt_Fecha.getText();
     
-    // Definir el formato de la fecha
-    SimpleDateFormat sdf = new SimpleDateFormat("Ingrese la fecha en este formato: dd/MM/yyyy");
-    sdf.setLenient(false);  // Para que valide estrictamente el formato
+        // Definir el formato de la fecha
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);  // validar que el formato sea correcto
 
-    try {
-        // Intentar parsear la fecha
-        sdf.parse(fechaIngresada);
-        
-        // Si es válida, mostrarla
-        JOptionPane.showMessageDialog(this, "Fecha Ingresada con exito " + fechaIngresada);
-    } catch (ParseException e) {
-        // Si la fecha es inválida, mostrar un error
-        JOptionPane.showMessageDialog(this, "Ingrese la fecha de llegada en el formato dd/MM/yyyy");
-    }
+        try {
+            sdf.parse(fechaIngresada);
+            
+            JOptionPane.showMessageDialog(null, "Fecha Ingresada con éxito: " + fechaIngresada);
+        } catch (ParseException e) {
 
+            JOptionPane.showMessageDialog(null, "Ingrese la fecha en el formato dd/MM/yyyy");
+        }   
     }//GEN-LAST:event_Jtxt_FechaActionPerformed
 
     private void Jtxt_fechasalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jtxt_fechasalidaActionPerformed
@@ -255,14 +272,11 @@ public class Home extends javax.swing.JFrame {
     sdf.setLenient(false);  // Para que valide estrictamente el formato
 
     try {
-        // Validar y parsear la fecha de salida
         sdf.parse(fechaSalida);
         
-        // Si la fecha de salida es válida, mostrarla
         JOptionPane.showMessageDialog(this, "Fecha ingresada con exito" + fechaSalida);
         
     } catch (ParseException e) {
-        // Mostrar un mensaje de error si la fecha de salida es inválida
         JOptionPane.showMessageDialog(this, "Ingrese la fecha de salida en el formato dd/MM/yyyy");
     }
     }//GEN-LAST:event_Jtxt_fechasalidaActionPerformed
@@ -274,6 +288,11 @@ public class Home extends javax.swing.JFrame {
     private void Combobox_habitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combobox_habitacionActionPerformed
             // TODO add your handling code here:
     }//GEN-LAST:event_Combobox_habitacionActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        JOptionPane.showMessageDialog(this,"ESPERAMOS VERTE PRONTO");
+        System.exit(0);  // TODO add your handling code here:
+    }//GEN-LAST:event_SalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,6 +337,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTextField Jtxt_fechasalida;
     private javax.swing.JLabel Nombre;
     private javax.swing.JTextField Numero;
+    private javax.swing.JButton Salir;
     private javax.swing.JTextField SaveNombre;
     private javax.swing.JTable Tabla_Habitaciones;
     private javax.swing.JButton jButton_mensaje;
@@ -330,6 +350,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

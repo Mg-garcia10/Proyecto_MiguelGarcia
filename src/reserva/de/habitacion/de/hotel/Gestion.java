@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Gestion {
     //con este arraylist hago una lista de habitaciones disponibles en el hotel
     private ArrayList<Habitacion> habitaciones = new ArrayList<>();
     private ArrayList<Reservar> reservas = new ArrayList<>();
+    private static final Random random = new Random();
     
     public Gestion() {
         //constructores

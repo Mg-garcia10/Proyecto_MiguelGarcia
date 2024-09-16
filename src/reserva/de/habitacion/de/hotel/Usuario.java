@@ -72,4 +72,10 @@ public class Usuario {
     public void agregarReserva(String detalles) {
         System.out.println("Reserva agregada para " + nombre + ": " + detalles);
     }
+     public void mostrarInformacion() {
+        System.out.println("Nombre: " + nombre);
+        System.out.println("ID: " + id);
+        System.out.println("Email: " + email);
+        System.out.println("Telefono: " + telefono);
+    }
 }
